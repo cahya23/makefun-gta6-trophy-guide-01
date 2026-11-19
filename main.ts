@@ -18,7 +18,7 @@
 // roadmap to the platinum, missable flags, cited guides, localStorage progress
 // with export/import, kind filters and a spoiler setting). Built for
 // gta6-trophy-guide-01; the entry below hands it in as plain static files.
-import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-frontend.ts';
@@ -27,7 +27,13 @@ const here = fileURLToPath(new URL('.', import.meta.url));
 const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
 mkdirSync(out, { recursive: true });
+// Clear each destination first: without this, re-running into the same output
+// directory leaves files a previous run copied (for example a page or
+// screenshot removed from app/ since) in place, so two runs no longer write
+// identical bytes.
+rmSync(join(out, 'app'), { recursive: true, force: true });
 cpSync(join(here, 'app'), join(out, 'app'), { recursive: true });
+rmSync(join(out, 'screenshots'), { recursive: true, force: true });
 mkdirSync(join(out, 'screenshots'), { recursive: true });
 if (existsSync(join(here, 'screenshots'))) cpSync(join(here, 'screenshots'), join(out, 'screenshots'), { recursive: true });
 
