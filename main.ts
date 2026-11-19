@@ -14,6 +14,10 @@
 // Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 
+// Vice Platinum Atlas: an offline GTA 6 trophy guide and tracker (55 trophies,
+// roadmap to the platinum, missable flags, cited guides, localStorage progress
+// with export/import, kind filters and a spoiler setting). Built for
+// gta6-trophy-guide-01; the entry below hands it in as plain static files.
 import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
